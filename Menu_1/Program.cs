@@ -135,17 +135,71 @@ internal class Program
     {
         Console.Clear();
         Console.WriteLine("Generar rectángulos con asteriscos.");
-        // Lógica para generar rectángulos con asteriscos
-
+        // Código específico para generar rectángulos con asteriscos
         Console.WindowWidth = 85;
         Console.WindowHeight = 30;
-        int x = Console.WindowWidth / 2, y = Console.WindowHeight / 2;
-        Console.SetCursorPosition(x-2, y);
+        ConsoleColor[] colores =
+        {
+            ConsoleColor.Cyan,
+            ConsoleColor.Blue,
+            ConsoleColor.Red,
+            ConsoleColor.Yellow
+        };
+
+        // Definimos el área del primer rectángulo
+        int left = 18;               // columna izquierda
+        int top = 5;                // fila superior
+        int right = 62;             // columna derecha (45 asteriscos)
+        int bottom = 21;            // fila inferior (17 asteriscos)
+        int delay = 1;
+        
+        for (int i = 0; i < colores.Length; i++)
+        {
+            Console.ForegroundColor = colores[i];
+
+            // DIBUJAR LÍNEA SUPERIOR (top) del rectángulo
+            for (int col = left; col <= right; col++)
+            {
+                Console.SetCursorPosition(col, top);
+                Console.Write("*");
+                Thread.Sleep(delay);
+            }
+
+            // DIBUJAR LÍNEA INFERIOR (bottom)
+            for (int col = left; col <= right; col++)
+            {
+                Console.SetCursorPosition(col, bottom);
+                Console.Write("*");
+                Thread.Sleep(delay);
+            }
+
+            // DIBUJAR LÍNEA IZQUIERDA
+            for (int row = top; row <= bottom; row++)
+            {
+                Console.SetCursorPosition(left, row);
+                Console.Write("*");
+                Thread.Sleep(delay + delay);
+            }
+
+            // DIBUJAR LÍNEA DERECHA
+            for (int row = top; row <= bottom; row++)
+            {
+                Console.SetCursorPosition(right, row);
+                Console.Write("*");
+                Thread.Sleep(delay + delay);
+            }
+
+            // Luego de dibujar un rectángulo, reduce el área para el siguiente
+            left += 5;
+            top += 2;
+            right -= 5;
+            bottom -= 2;
+        }
+
+        // DIBUJAR LOS ÚLTIMOS 3 ASTERISCOS
+        Console.SetCursorPosition(left, top);
         Console.ForegroundColor = ConsoleColor.Green;
         Console.Write("* * *");
-        Console.SetCursorPosition(x, y-2);
-
-
         Console.ForegroundColor = ConsoleColor.Red;
         Console.SetCursorPosition(11, 27);
         Console.Write("Finalizado. Presione cualquier tecla para volver al menú...");
@@ -159,7 +213,7 @@ internal class Program
         // Código específico para generar barras con asteriscos
         Console.WindowWidth = 85;
         Console.WindowHeight = 30;
-        int x = 1, y = 19, countR = 0, sleep = 50;
+        int x = 1, y = 19, countR = 0, sleep = 10;
         Console.SetCursorPosition(x, y);
         WriteCyan();
         for (int i = 7 - 1; i >= 0; i--)
@@ -226,7 +280,7 @@ internal class Program
         // Código específico para generar espiral con asteriscos
         Console.WindowWidth = 85;
         Console.WindowHeight = 30;
-        int x = Console.WindowWidth / 2, y = Console.WindowHeight / 2, l = 4, u = 2, r = 9, d = 4, colorIndex = 0, sleep = 50;
+        int x = Console.WindowWidth / 2, y = Console.WindowHeight / 2, l = 4, u = 2, r = 9, d = 4, colorIndex = 0, sleep = 10;
         Console.SetCursorPosition(x, y);
         ConsoleColor[] colores = { ConsoleColor.Green, ConsoleColor.Yellow, ConsoleColor.Blue, ConsoleColor.Red, ConsoleColor.Cyan };
         Console.ForegroundColor = colores[colorIndex];
@@ -302,7 +356,11 @@ internal class Program
         Console.Clear();
         Console.WriteLine("Mostrar la tabla de senos del 0 al 90.");
         // Lógica para mostrar la tabla de senos
-        MenuOpciones();
+
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.SetCursorPosition(11, 28);
+        Console.Write("Finalizado. Presione cualquier tecla para volver al menú...");
+        Console.ReadKey();
     }
 
     private static void MostrarTablaCosenos()
@@ -310,7 +368,11 @@ internal class Program
         Console.Clear();
         Console.WriteLine("Mostrar la tabla de cosenos del 0 al 90.");
         // Lógica para mostrar la tabla de cosenos
-        MenuOpciones();
+
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.SetCursorPosition(11, 28);
+        Console.Write("Finalizado. Presione cualquier tecla para volver al menú...");
+        Console.ReadKey();
     }
 
     private static void CalcularHipotenusa()
@@ -318,7 +380,11 @@ internal class Program
         Console.Clear();
         Console.WriteLine("Calcular hipotenusa y ángulos de un triángulo rectángulo.");
         // Lógica para calcular hipotenusa y ángulos
-        MenuOpciones();
+
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.SetCursorPosition(11, 28);
+        Console.Write("Finalizado. Presione cualquier tecla para volver al menú...");
+        Console.ReadKey();
     }
 
     private static void CalcularPendiente()
@@ -326,7 +392,11 @@ internal class Program
         Console.Clear();
         Console.WriteLine("Calcular pendiente, ángulo de inclinación y punto medio de una recta.");
         // Lógica para calcular pendiente, ángulo de inclinación y punto medio
-        MenuOpciones();
+
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.SetCursorPosition(11, 28);
+        Console.Write("Finalizado. Presione cualquier tecla para volver al menú...");
+        Console.ReadKey();
     }
 
     private static void CalcularTrayectoriaProyectil()
@@ -334,31 +404,10 @@ internal class Program
         Console.Clear();
         Console.WriteLine("Calcular trayectoria de un proyectil.");
         // Lógica para calcular trayectoria de un proyectil
-        MenuOpciones();
-    }
 
-    private static void MenuOpciones()
-    {
-        Console.WriteLine("1. Menú anterior");
-        Console.WriteLine("2. Continuar");
-        Console.WriteLine("3. Salir");
-        Console.Write("Seleccione una opción: ");
-
-        string input = Console.ReadLine();
-
-        switch (input)
-        {
-            case "1":
-                return;
-            case "2":
-                break;
-            case "3":
-                Environment.Exit(0);
-                break;
-            default:
-                Console.WriteLine("Opción no válida. Presione cualquier tecla para continuar...");
-                Console.ReadKey();
-                break;
-        }
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.SetCursorPosition(11, 28);
+        Console.Write("Finalizado. Presione cualquier tecla para volver al menú...");
+        Console.ReadKey();
     }
 }
