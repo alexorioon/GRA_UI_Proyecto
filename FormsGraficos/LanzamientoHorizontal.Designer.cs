@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             ptbDibujo = new PictureBox();
+            btnIniciar = new Button();
+            btnPausarReanudar = new Button();
+            btnReiniciar = new Button();
             ((System.ComponentModel.ISupportInitialize)ptbDibujo).BeginInit();
             SuspendLayout();
             // 
@@ -42,11 +45,51 @@
             ptbDibujo.TabStop = false;
             ptbDibujo.Paint += ptbDibujo_Paint;
             // 
+            // btnIniciar
+            // 
+            btnIniciar.Cursor = Cursors.Hand;
+            btnIniciar.Location = new Point(587, 12);
+            btnIniciar.Margin = new Padding(1);
+            btnIniciar.Name = "btnIniciar";
+            btnIniciar.Size = new Size(51, 23);
+            btnIniciar.TabIndex = 1;
+            btnIniciar.Text = "Iniciar";
+            btnIniciar.UseVisualStyleBackColor = true;
+            btnIniciar.Click += btnIniciar_Click;
+            // 
+            // btnPausarReanudar
+            // 
+            btnPausarReanudar.Cursor = Cursors.Hand;
+            btnPausarReanudar.Enabled = false;
+            btnPausarReanudar.Location = new Point(644, 12);
+            btnPausarReanudar.Name = "btnPausarReanudar";
+            btnPausarReanudar.Size = new Size(72, 23);
+            btnPausarReanudar.TabIndex = 2;
+            btnPausarReanudar.Text = "Pausar";
+            btnPausarReanudar.UseVisualStyleBackColor = true;
+            btnPausarReanudar.Click += btnPausarReanudar_Click;
+            // 
+            // btnReiniciar
+            // 
+            btnReiniciar.BackColor = SystemColors.Control;
+            btnReiniciar.Cursor = Cursors.Hand;
+            btnReiniciar.Location = new Point(722, 12);
+            btnReiniciar.Margin = new Padding(0);
+            btnReiniciar.Name = "btnReiniciar";
+            btnReiniciar.Size = new Size(66, 23);
+            btnReiniciar.TabIndex = 3;
+            btnReiniciar.Text = "Reiniciar";
+            btnReiniciar.UseVisualStyleBackColor = false;
+            btnReiniciar.Click += btnReiniciar_Click;
+            // 
             // LanzamientoHorizontal
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnReiniciar);
+            Controls.Add(btnPausarReanudar);
+            Controls.Add(btnIniciar);
             Controls.Add(ptbDibujo);
             Name = "LanzamientoHorizontal";
             Text = "LanzamientoHorizontal";
@@ -57,5 +100,8 @@
         #endregion
 
         private PictureBox ptbDibujo;
+        private Button btnIniciar;
+        private Button btnPausarReanudar;
+        private Button btnReiniciar;
     }
 }
