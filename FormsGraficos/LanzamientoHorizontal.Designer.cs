@@ -32,6 +32,11 @@
             btnIniciar = new Button();
             btnPausarReanudar = new Button();
             btnReiniciar = new Button();
+            label1 = new Label();
+            label2 = new Label();
+            txtAlturaInicial = new TextBox();
+            txtVelocidadInicial = new TextBox();
+            btnAplicarParametros = new Button();
             ((System.ComponentModel.ISupportInitialize)ptbDibujo).BeginInit();
             SuspendLayout();
             // 
@@ -48,7 +53,7 @@
             // btnIniciar
             // 
             btnIniciar.Cursor = Cursors.Hand;
-            btnIniciar.Location = new Point(587, 12);
+            btnIniciar.Location = new Point(590, 119);
             btnIniciar.Margin = new Padding(1);
             btnIniciar.Name = "btnIniciar";
             btnIniciar.Size = new Size(51, 23);
@@ -61,7 +66,7 @@
             // 
             btnPausarReanudar.Cursor = Cursors.Hand;
             btnPausarReanudar.Enabled = false;
-            btnPausarReanudar.Location = new Point(644, 12);
+            btnPausarReanudar.Location = new Point(647, 119);
             btnPausarReanudar.Name = "btnPausarReanudar";
             btnPausarReanudar.Size = new Size(72, 23);
             btnPausarReanudar.TabIndex = 2;
@@ -73,7 +78,7 @@
             // 
             btnReiniciar.BackColor = SystemColors.Control;
             btnReiniciar.Cursor = Cursors.Hand;
-            btnReiniciar.Location = new Point(722, 12);
+            btnReiniciar.Location = new Point(725, 119);
             btnReiniciar.Margin = new Padding(0);
             btnReiniciar.Name = "btnReiniciar";
             btnReiniciar.Size = new Size(66, 23);
@@ -82,11 +87,58 @@
             btnReiniciar.UseVisualStyleBackColor = false;
             btnReiniciar.Click += btnReiniciar_Click;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(575, 15);
+            label1.Name = "label1";
+            label1.Size = new Size(107, 17);
+            label1.TabIndex = 4;
+            label1.Text = "Altura inicial (px):";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(541, 46);
+            label2.Name = "label2";
+            label2.Size = new Size(141, 17);
+            label2.TabIndex = 5;
+            label2.Text = "Velocidad inicial (px/s):";
+            // 
+            // txtAlturaInicial
+            // 
+            txtAlturaInicial.Location = new Point(688, 12);
+            txtAlturaInicial.Name = "txtAlturaInicial";
+            txtAlturaInicial.Size = new Size(100, 25);
+            txtAlturaInicial.TabIndex = 6;
+            // 
+            // txtVelocidadInicial
+            // 
+            txtVelocidadInicial.Location = new Point(688, 43);
+            txtVelocidadInicial.Name = "txtVelocidadInicial";
+            txtVelocidadInicial.Size = new Size(100, 25);
+            txtVelocidadInicial.TabIndex = 7;
+            // 
+            // btnAplicarParametros
+            // 
+            btnAplicarParametros.Location = new Point(708, 74);
+            btnAplicarParametros.Name = "btnAplicarParametros";
+            btnAplicarParametros.Size = new Size(60, 32);
+            btnAplicarParametros.TabIndex = 8;
+            btnAplicarParametros.Text = "Aplicar";
+            btnAplicarParametros.UseVisualStyleBackColor = true;
+            btnAplicarParametros.Click += btnAplicarParametros_Click;
+            // 
             // LanzamientoHorizontal
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnAplicarParametros);
+            Controls.Add(txtVelocidadInicial);
+            Controls.Add(txtAlturaInicial);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(btnReiniciar);
             Controls.Add(btnPausarReanudar);
             Controls.Add(btnIniciar);
@@ -95,6 +147,7 @@
             Text = "LanzamientoHorizontal";
             ((System.ComponentModel.ISupportInitialize)ptbDibujo).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -103,5 +156,10 @@
         private Button btnIniciar;
         private Button btnPausarReanudar;
         private Button btnReiniciar;
+        private Label label1;
+        private Label label2;
+        private TextBox txtAlturaInicial;
+        private TextBox txtVelocidadInicial;
+        private Button btnAplicarParametros;
     }
 }

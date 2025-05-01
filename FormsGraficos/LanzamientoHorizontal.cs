@@ -18,6 +18,7 @@ namespace FormsGraficos
         private int x, y;
         //Pausar / Reanudar ???
         private bool estaPausado = false;
+        private bool tocoPiso = false;
         public LanzamientoHorizontal()
         {
             InitializeComponent();
@@ -32,6 +33,7 @@ namespace FormsGraficos
             tiempoActual = 0;
             x = XInicial;
             y = ptbDibujo.Height - (int)alturaInicial - CircleDiameter;
+            tocoPiso = false;
             ptbDibujo.Invalidate();
         }
         private void timer_Tick(object sender, EventArgs e)
@@ -48,13 +50,21 @@ namespace FormsGraficos
             {
                 timer.Stop();
                 y = ptbDibujo.Height - CircleDiameter;
+                tocoPiso = true;
             }
             ptbDibujo.Invalidate();
         }
         private void ptbDibujo_Paint(object sender, PaintEventArgs e)
         {
             graphics = e.Graphics;
-            graphics.DrawEllipse(new Pen(Color.Red, 3f), x, y, CircleDiameter, CircleDiameter);
+            if (tocoPiso)
+            {
+                graphics.DrawEllipse(new Pen(Color.Red, 4f), x, y+10, CircleDiameter, CircleDiameter-10);
+            }
+            else
+            {
+                graphics.DrawEllipse(new Pen(Color.Red, 4f), x, y, CircleDiameter, CircleDiameter);
+            }
             DibujarTrayectoria();
             MostrarInformacion();
             DibujarPared_Suelo();
@@ -145,6 +155,31 @@ namespace FormsGraficos
             btnIniciar.Enabled = true;
             ResetAnimation();
             ptbDibujo.Invalidate();
+        }
+
+        private void btnAplicarParametros_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                double nuevaAltura = double.Parse(txtAlturaInicial.Text);
+                double nuevaVelocidad = double.Parse(txtVelocidadInicial.Text);
+
+                if (nuevaAltura < 0 || nuevaVelocidad < 0)
+                {
+                    MessageBox.Show("Los valores deben ser positivos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                alturaInicial = nuevaAltura;
+                velocidadInicial = nuevaVelocidad;
+                ResetAnimation();
+                ptbDibujo.Invalidate();
+                MessageBox.Show("Parámetros actualizados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch
+            {
+                MessageBox.Show("Por favor ingresa valores numéricos válidos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
