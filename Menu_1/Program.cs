@@ -356,7 +356,34 @@ internal class Program
         Console.Clear();
         Console.WriteLine("Mostrar la tabla de senos del 0 al 90.");
         // Lógica para mostrar la tabla de senos
+        int columnas = 5; // Número de columnas que quieres mostrar
+        int filasPorColumna = 19; // Elementos por columna
+        int espacioColumnas = 18;
 
+        for (int col = 0; col < columnas; col++)
+        {
+            for (int fila = 0; fila < filasPorColumna; fila++)
+            {
+                int angulo = col * filasPorColumna + fila;
+                if (angulo > 90) break; // Salir si superamos 90°
+
+                double radianes = angulo * Math.PI / 180;
+                double senoTaylor = 0;
+
+                // Serie de Taylor (10 términos)
+                for (int n = 0; n < 10; n++)
+                {
+                    double factorial = 1;
+                    for (int i = 1; i <= 2 * n + 1; i++) factorial *= i;
+                    senoTaylor += Math.Pow(-1, n) * Math.Pow(radianes, 2 * n + 1) / factorial;
+                }
+                // Posicionamiento en pantalla
+                int posX = col * espacioColumnas;
+                int posY = fila + 3; // +3 para dejar espacio al título
+                Console.SetCursorPosition(posX, posY);
+                Console.Write($"{angulo}° = {senoTaylor:F8}");
+            }
+        }
         Console.ForegroundColor = ConsoleColor.Red;
         Console.SetCursorPosition(11, 28);
         Console.Write("Finalizado. Presione cualquier tecla para volver al menú...");
@@ -368,7 +395,34 @@ internal class Program
         Console.Clear();
         Console.WriteLine("Mostrar la tabla de cosenos del 0 al 90.");
         // Lógica para mostrar la tabla de cosenos
+        int columnas = 5; // Número de columnas que quieres mostrar
+        int filasPorColumna = 19; // Elementos por columna
+        int espacioColumnas = 18;
 
+        for (int col = 0; col < columnas; col++)
+        {
+            for (int fila = 0; fila < filasPorColumna; fila++)
+            {
+                int angulo = col * filasPorColumna + fila;
+                if (angulo > 90) break; // Salir si superamos 90°
+
+                double radianes = angulo * Math.PI / 180;
+                double cosenoTaylor = 0;
+
+                // Serie de Taylor para coseno (10 términos)
+                for (int n = 0; n < 10; n++)
+                {
+                    double factorial = 1;
+                    for (int i = 1; i <= 2 * n; i++) factorial *= i;
+                    cosenoTaylor += Math.Pow(-1, n) * Math.Pow(radianes, 2 * n) / factorial;
+                }
+                // Posicionamiento en pantalla
+                int posX = col * espacioColumnas;
+                int posY = fila + 3; // +3 para dejar espacio al título
+                Console.SetCursorPosition(posX, posY);
+                Console.Write($"{angulo}° = {cosenoTaylor:F8}");
+            }
+        }
         Console.ForegroundColor = ConsoleColor.Red;
         Console.SetCursorPosition(11, 28);
         Console.Write("Finalizado. Presione cualquier tecla para volver al menú...");
