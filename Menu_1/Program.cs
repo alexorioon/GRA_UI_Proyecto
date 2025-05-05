@@ -434,6 +434,29 @@ internal class Program
         Console.Clear();
         Console.WriteLine("Calcular hipotenusa y ángulos de un triángulo rectángulo.");
         // Lógica para calcular hipotenusa y ángulos
+        Console.Write("Introduce el primer cateto: ");
+        string lado1Str = Console.ReadLine();
+        double lado1 = Convert.ToDouble(lado1Str);
+
+        Console.Write("Introduce el segundo cateto: ");
+        string lado2Str = Console.ReadLine();
+        double lado2 = Convert.ToDouble(lado2Str);
+
+        // Calcular la hipotenusa
+        double hipotenusa = Math.Sqrt(lado1 * lado1 + lado2 * lado2);
+
+        // Calcular los ángulos menores de 90 grados
+        double anguloAInRads = Math.Acos(lado2 / hipotenusa);
+        double anguloBInRads = Math.Acos(lado1 / hipotenusa);
+
+        // Convertir a grados
+        double anguloAInDegs = anguloAInRads * 180.0 / Math.PI;
+        double anguloBInDegs = anguloBInRads * 180.0 / Math.PI;
+
+        // Mostrar los resultados
+        Console.WriteLine($"Hipotenusa: {hipotenusa}");
+        Console.WriteLine($"Ángulo menor 1: {anguloAInDegs:F2}°");
+        Console.WriteLine($"Ángulo menor 2: {anguloBInDegs:F2}°");
 
         Console.ForegroundColor = ConsoleColor.Red;
         Console.SetCursorPosition(11, 28);
@@ -446,6 +469,52 @@ internal class Program
         Console.Clear();
         Console.WriteLine("Calcular pendiente, ángulo de inclinación y punto medio de una recta.");
         // Lógica para calcular pendiente, ángulo de inclinación y punto medio
+        // Pedir coordenadas de los dos puntos
+        Console.Write("Introduce coordenadas del primer punto (x y): ");
+        string[] coords1 = Console.ReadLine().Split();
+        int x1 = int.Parse(coords1[0]);
+        int y1 = int.Parse(coords1[1]);
+
+        Console.Write("Introduce coordenadas del segundo punto (x y): ");
+        string[] coords2 = Console.ReadLine().Split();
+        int x2 = int.Parse(coords2[0]);
+        int y2 = int.Parse(coords2[1]);
+
+        // Cálculo de la pendiente
+        double m;
+        if (x2 == x1)
+        {
+            m = double.NaN;
+            Console.WriteLine("La pendiente no está definida.");
+        }
+        else
+        {
+            m = (double)(y2 - y1) / (x2 - x1);
+        }
+
+        // Cálculo del ángulo de inclinación
+        double angle;
+        if (m > 0)
+        {
+            angle = Math.Atan(m) * 180 / Math.PI;
+        }
+        else if (m == 0)
+        {
+            angle = 0;
+        }
+        else
+        {
+            angle = (Math.Atan(m) + Math.PI) * 180 / Math.PI;
+        }
+
+        // Cálculo del punto medio
+        double midX = (x1 + x2) / 2.0;
+        double midY = (y1 + y2) / 2.0;
+
+        // Mostrar resultados
+        Console.WriteLine($"Pendiente: {m}");
+        Console.WriteLine($"Ángulo de inclinación: {angle} grados");
+        Console.WriteLine($"Coordenadas del punto medio: ({midX}, {midY})");
 
         Console.ForegroundColor = ConsoleColor.Red;
         Console.SetCursorPosition(11, 28);
