@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace FormsGraficos
 {
-    
+
     public partial class FrmGraphics2D : Form
     {
         private List<Figura2D> figuras = new List<Figura2D>();
@@ -38,6 +38,8 @@ namespace FormsGraficos
             // Evento click sobre panel de dibujo
             panelDibujo.MouseClick += PanelDibujo_MouseClick;
             panelDibujo.MouseDoubleClick += PanelDibujo_MouseDoubleClick;
+            // Evento para mostrar coordenadas del mouse
+            panelDibujo.MouseMove += panelDibujo_MouseMove;
 
             // Historial
             listBoxFiguras.SelectedIndexChanged += (s, e) =>
@@ -84,6 +86,7 @@ namespace FormsGraficos
                 figuraActual.Finalizar();
                 dibujando = false;
                 RefrescarPlano();
+                MostrarCoordenadas();
             }
         }
 
@@ -94,10 +97,15 @@ namespace FormsGraficos
 
         private PointF PantallaAPunto(Point p)
         {
-            // Convierte coordenadas de pixel a cartelescas (origen al centro)
+            // Convierte coordenadas de pixel a cartesianas (origen al centro)
             float cx = panelDibujo.Width / 2f;
             float cy = panelDibujo.Height / 2f;
-            return new PointF(p.X - cx, cy - p.Y);
+
+            // Aplicar redondeo para eliminar los .5
+            return new PointF((int)(p.X - cx), (int)(cy - p.Y));
+
+            // Alternativamente, si prefieres que muestre los valores exactos:
+            // return new PointF(p.X - cx, cy - p.Y);
         }
 
         private Point PuntoAPantalla(PointF p)
@@ -145,6 +153,17 @@ namespace FormsGraficos
         private void AplicarTraslacion()
         {
             if (figuraActual == null) return;
+
+            // Crear nueva figura basada en la actual
+            Figura2D nuevaFigura = figuraActual.CrearCopia();
+            figuras.Add(nuevaFigura);
+            listBoxFiguras.Items.Add(nuevaFigura.Nombre);
+
+            // Hacer que la nueva figura sea la actual
+            figuraActual = nuevaFigura;
+            listBoxFiguras.SelectedIndex = listBoxFiguras.Items.Count - 1;
+
+            // Aplicar transformación
             float dx = (float)numericDx.Value;
             float dy = (float)numericDy.Value;
             float[,] m = { { 1, 0, 0 }, { 0, 1, 0 }, { dx, dy, 1 } }; // Matriz 3x3
@@ -156,6 +175,16 @@ namespace FormsGraficos
         private void AplicarEscalacion()
         {
             if (figuraActual == null) return;
+
+            // Crear nueva figura basada en la actual
+            Figura2D nuevaFigura = figuraActual.CrearCopia();
+            figuras.Add(nuevaFigura);
+            listBoxFiguras.Items.Add(nuevaFigura.Nombre);
+
+            // Hacer que la nueva figura sea la actual
+            figuraActual = nuevaFigura;
+            listBoxFiguras.SelectedIndex = listBoxFiguras.Items.Count - 1;
+
             float sx = (float)numericSx.Value;
             float sy = (float)numericSy.Value;
             PointF fix = new PointF(0, 0);
@@ -172,6 +201,16 @@ namespace FormsGraficos
         private void AplicarRotacion()
         {
             if (figuraActual == null) return;
+
+            // Crear nueva figura basada en la actual
+            Figura2D nuevaFigura = figuraActual.CrearCopia();
+            figuras.Add(nuevaFigura);
+            listBoxFiguras.Items.Add(nuevaFigura.Nombre);
+
+            // Hacer que la nueva figura sea la actual
+            figuraActual = nuevaFigura;
+            listBoxFiguras.SelectedIndex = listBoxFiguras.Items.Count - 1;
+
             float ang = (float)numericAng.Value * (float)Math.PI / 180f;
             PointF fix = new PointF(0, 0);
             if (checkBoxFijo.Checked)
@@ -187,6 +226,16 @@ namespace FormsGraficos
         private void AplicarReflexion()
         {
             if (figuraActual == null) return;
+
+            // Crear nueva figura basada en la actual
+            Figura2D nuevaFigura = figuraActual.CrearCopia();
+            figuras.Add(nuevaFigura);
+            listBoxFiguras.Items.Add(nuevaFigura.Nombre);
+
+            // Hacer que la nueva figura sea la actual
+            figuraActual = nuevaFigura;
+            listBoxFiguras.SelectedIndex = listBoxFiguras.Items.Count - 1;
+
             float[,] r;
             if (radioX.Checked) r = new float[,] { { 1, 0, 0 }, { 0, -1, 0 }, { 0, 0, 1 } };
             else if (radioY.Checked) r = new float[,] { { -1, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 } };
@@ -203,6 +252,12 @@ namespace FormsGraficos
                     for (int k = 0; k < 3; k++)
                         R[i, j] += A[i, k] * B[k, j];
             return R;
+        }
+
+        private void panelDibujo_MouseMove(object sender, MouseEventArgs e)
+        {
+            PointF coordenadas = PantallaAPunto(e.Location);
+            lblCoordenadas.Text = $"X:{coordenadas.X:F2} Y:{coordenadas.Y:F2}";
         }
     }
 }

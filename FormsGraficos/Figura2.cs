@@ -15,6 +15,21 @@ namespace FormsGraficos
         private static int _contador = 0;
         public int Id { get; }
 
+        public Figura2D CrearCopia()
+        {
+            Figura2D nuevaFigura = new Figura2D();
+            nuevaFigura.ColorFigura = this.ColorFigura;
+
+            // Los puntos transformados de la figura actual serán los puntos originales de la nueva
+            foreach (var punto in this.PuntosTransformados)
+            {
+                nuevaFigura.PuntosOriginales.Add(new PointF(punto.X, punto.Y));
+            }
+
+            nuevaFigura.ResetTransformadas();
+            return nuevaFigura;
+        }
+
         public Figura2D()
         {
             Id = ++_contador;
