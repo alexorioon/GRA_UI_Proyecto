@@ -157,35 +157,34 @@
             // 
             // dataGridViewTextBoxColumn1
             // 
-            dataGridViewTextBoxColumn1.Name = "Puntos";
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             dataGridViewTextBoxColumn1.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn2
             // 
-            dataGridViewTextBoxColumn2.Name = "X";
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             dataGridViewTextBoxColumn2.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn3
             // 
-            dataGridViewTextBoxColumn3.Name = "Y";
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             dataGridViewTextBoxColumn3.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn4
             // 
-            dataGridViewTextBoxColumn4.Name = "New X";
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn5
             // 
-            dataGridViewTextBoxColumn5.Name = "New Y";
+            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             dataGridViewTextBoxColumn5.ReadOnly = true;
             // 
             // numericDx
             // 
             numericDx.Location = new Point(30, 20);
             numericDx.Margin = new Padding(4, 3, 4, 3);
-            numericDx.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
-            numericDx.Minimum = new decimal(new int[] { 1000, 0, 0, int.MinValue });
+            numericDx.Minimum = new decimal(new int[] { 100, 0, 0, int.MinValue });
             numericDx.Name = "numericDx";
             numericDx.Size = new Size(70, 23);
             numericDx.TabIndex = 14;
@@ -196,8 +195,7 @@
             // 
             numericDy.Location = new Point(137, 20);
             numericDy.Margin = new Padding(4, 3, 4, 3);
-            numericDy.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
-            numericDy.Minimum = new decimal(new int[] { 1000, 0, 0, int.MinValue });
+            numericDy.Minimum = new decimal(new int[] { 100, 0, 0, int.MinValue });
             numericDy.Name = "numericDy";
             numericDy.Size = new Size(70, 23);
             numericDy.TabIndex = 13;
@@ -215,28 +213,27 @@
             // 
             // numericSx
             // 
+            numericSx.DecimalPlaces = 2;
             numericSx.Location = new Point(39, 48);
             numericSx.Margin = new Padding(4, 3, 4, 3);
             numericSx.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
-            numericSx.Minimum = new decimal(new int[] { 5, 0, 0, int.MinValue });
+            numericSx.Minimum = new decimal(new int[] { 1, 0, 0, 65536 });
             numericSx.Name = "numericSx";
             numericSx.Size = new Size(70, 23);
-            numericSx.Maximum = 5;
-            numericSx.DecimalPlaces = 2;
-            numericSx.Minimum = 0.1m;
+            numericSx.TabIndex = 10;
+            numericSx.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // numericSy
             // 
+            numericSy.DecimalPlaces = 2;
             numericSy.Location = new Point(146, 48);
             numericSy.Margin = new Padding(4, 3, 4, 3);
             numericSy.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
-            numericSy.Minimum = new decimal(new int[] { 5, 0, 0, int.MinValue });
+            numericSy.Minimum = new decimal(new int[] { 1, 0, 0, 65536 });
             numericSy.Name = "numericSy";
             numericSy.Size = new Size(70, 23);
             numericSy.TabIndex = 10;
-            numericSy.Maximum = 5;
-            numericSy.DecimalPlaces = 2;
-            numericSy.Minimum = 0.1m;
+            numericSy.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // checkBoxFijo
             // 
@@ -252,8 +249,7 @@
             numericFx.Enabled = false;
             numericFx.Location = new Point(131, 19);
             numericFx.Margin = new Padding(4, 3, 4, 3);
-            numericFx.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
-            numericFx.Minimum = new decimal(new int[] { 1000, 0, 0, int.MinValue });
+            numericFx.Minimum = new decimal(new int[] { 100, 0, 0, int.MinValue });
             numericFx.Name = "numericFx";
             numericFx.Size = new Size(61, 23);
             numericFx.TabIndex = 8;
@@ -265,8 +261,7 @@
             numericFy.Enabled = false;
             numericFy.Location = new Point(224, 19);
             numericFy.Margin = new Padding(4, 3, 4, 3);
-            numericFy.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
-            numericFy.Minimum = new decimal(new int[] { 1000, 0, 0, int.MinValue });
+            numericFy.Minimum = new decimal(new int[] { 100, 0, 0, int.MinValue });
             numericFy.Name = "numericFy";
             numericFy.Size = new Size(61, 23);
             numericFy.TabIndex = 7;

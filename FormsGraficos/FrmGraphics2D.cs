@@ -10,12 +10,17 @@ using System.Windows.Forms;
 
 namespace FormsGraficos
 {
-
     public partial class FrmGraphics2D : Form
     {
         private List<Figura2D> figuras = new List<Figura2D>();
         private Figura2D figuraActual;
         private bool dibujando = false;
+
+        // Factor de escala para hacer el plano cartesiano más pequeño (aproximadamente 13 veces)
+        private float factorEscala = 13.0f;
+
+        // Espaciado entre unidades en el plano
+        private int unidadEspaciado = 2; // Cada 10 unidades
 
         public FrmGraphics2D()
         {
@@ -34,6 +39,13 @@ namespace FormsGraficos
                     RefrescarPlano();
                 }
             };
+
+            // Configurar encabezados de columnas del DataGridView
+            dataGridViewCoord.Columns[0].HeaderText = "Puntos";
+            dataGridViewCoord.Columns[1].HeaderText = "X";
+            dataGridViewCoord.Columns[2].HeaderText = "Y";
+            dataGridViewCoord.Columns[3].HeaderText = "New X";
+            dataGridViewCoord.Columns[4].HeaderText = "New Y";
 
             // Evento click sobre panel de dibujo
             panelDibujo.MouseClick += PanelDibujo_MouseClick;
@@ -61,6 +73,13 @@ namespace FormsGraficos
             btnEscalar.Click += (s, e) => AplicarEscalacion();
             btnRotar.Click += (s, e) => AplicarRotacion();
             btnReflejar.Click += (s, e) => AplicarReflexion();
+
+            // Habilitar/deshabilitar los campos de punto fijo
+            checkBoxFijo.CheckedChanged += (s, e) =>
+            {
+                numericFx.Enabled = checkBoxFijo.Checked;
+                numericFy.Enabled = checkBoxFijo.Checked;
+            };
         }
 
         private void PanelDibujo_MouseClick(object sender, MouseEventArgs e)
@@ -101,28 +120,42 @@ namespace FormsGraficos
             float cx = panelDibujo.Width / 2f;
             float cy = panelDibujo.Height / 2f;
 
-            // Aplicar redondeo para eliminar los .5
-            return new PointF((int)(p.X - cx), (int)(cy - p.Y));
+            // Aplicar el factor de escala al convertir de pantalla a coordenadas
+            float x = (p.X - cx) / factorEscala;
+            float y = (cy - p.Y) / factorEscala;
 
-            // Alternativamente, si prefieres que muestre los valores exactos:
-            // return new PointF(p.X - cx, cy - p.Y);
+            // Aplicar redondeo para valores más limpios
+            return new PointF((float)Math.Round(x, 1), (float)Math.Round(y, 1));
         }
 
         private Point PuntoAPantalla(PointF p)
         {
             float cx = panelDibujo.Width / 2f;
             float cy = panelDibujo.Height / 2f;
-            return new Point((int)(p.X + cx), (int)(cy - p.Y));
+
+            // Aplicar el factor de escala al convertir coordenadas a pantalla
+            return new Point(
+                (int)(p.X * factorEscala + cx),
+                (int)(cy - p.Y * factorEscala)
+            );
         }
 
         private void panelDibujo_Paint(object sender, PaintEventArgs e)
         {
             var g = e.Graphics;
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            // Dibuja ejes
+
+            // Centro del panel
+            float cx = panelDibujo.Width / 2f;
+            float cy = panelDibujo.Height / 2f;
+
+            // Dibuja ejes principales
             var penAxis = new Pen(Color.Gray, 1);
-            g.DrawLine(penAxis, 0, panelDibujo.Height / 2, panelDibujo.Width, panelDibujo.Height / 2);
-            g.DrawLine(penAxis, panelDibujo.Width / 2, 0, panelDibujo.Width / 2, panelDibujo.Height);
+            g.DrawLine(penAxis, 0, (int)cy, panelDibujo.Width, (int)cy); // Eje X
+            g.DrawLine(penAxis, (int)cx, 0, (int)cx, panelDibujo.Height); // Eje Y
+
+            // Dibujar unidades en el plano
+            DibujarUnidades(g, cx, cy);
 
             // Dibuja figuras
             foreach (var fig in figuras)
@@ -134,6 +167,51 @@ namespace FormsGraficos
                         g.DrawLines(pen, pts);
                 }
             }
+        }
+
+        private void DibujarUnidades(Graphics g, float cx, float cy)
+        {
+            // Calcular rango visible en unidades
+            int rangoXMax = (int)Math.Ceiling((panelDibujo.Width / 2f) / factorEscala);
+            int rangoYMax = (int)Math.Ceiling((panelDibujo.Height / 2f) / factorEscala);
+
+            // Lapices para dibujar
+            var penTick = new Pen(Color.Gray, 1);
+            var brushText = new SolidBrush(Color.Black);
+            var fontAxis = new Font("Arial", 8);
+
+            // Dibujar marcas en eje X
+            for (int x = -rangoXMax; x <= rangoXMax; x += unidadEspaciado)
+            {
+                if (x == 0) continue; // Omitir el origen
+
+                Point p = PuntoAPantalla(new PointF(x, 0));
+                g.DrawLine(penTick, p.X, p.Y - 5, p.X, p.Y + 5);
+
+                // Etiqueta numérica (evitar el 0)
+                string texto = x.ToString();
+                SizeF tamTexto = g.MeasureString(texto, fontAxis);
+                g.DrawString(texto, fontAxis, brushText,
+                    p.X - tamTexto.Width / 2, p.Y + 5);
+            }
+
+            // Dibujar marcas en eje Y
+            for (int y = -rangoYMax; y <= rangoYMax; y += unidadEspaciado)
+            {
+                if (y == 0) continue; // Omitir el origen
+
+                Point p = PuntoAPantalla(new PointF(0, y));
+                g.DrawLine(penTick, p.X - 5, p.Y, p.X + 5, p.Y);
+
+                // Etiqueta numérica (evitar el 0)
+                string texto = y.ToString();
+                SizeF tamTexto = g.MeasureString(texto, fontAxis);
+                g.DrawString(texto, fontAxis, brushText,
+                    p.X - tamTexto.Width - 5, p.Y - tamTexto.Height / 2);
+            }
+
+            // Dibujar el origen (0,0)
+            g.DrawString("0", fontAxis, brushText, cx + 5, cy + 5);
         }
 
         private void MostrarCoordenadas()
